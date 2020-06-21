@@ -47,7 +47,7 @@ var twoSum = function(nums, target) {
   
 
   /**
-   * 1. 暴力法
+   * 1. 暴力解法
    * 
    * 实现思路：
    *  两重循环，分别获取不同位置的下标 i, j 的对应元素 nums[i], nums[j] 相加如果为 target，那么 i, j 就是要返回的下标
