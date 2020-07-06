@@ -32,6 +32,10 @@ var moveZeroes = function(nums) {
    *  这的中间点就是 0 本身，可以使用两个指针 i 和 j，只要 nums[i] !== 0，
    *   就交换 nums[i] 和 nums[j]，同时把 j++
    * 
+   * 上一次思路：
+   *  使用两个指针 i 和 j（记录 0 所在下标，非 0 就下移一位），只要 nums[i] !== 0，
+   *   就交换 nums[i] 和 nums[j]，同时把 j 移动到下一位
+   * 
    * 复杂度分析：
    *  时间复杂度: O(n)
    *  空间复杂度: O(1)
@@ -41,7 +45,6 @@ var moveZeroes = function(nums) {
    *  Your runtime beats 61.87 % of javascript submissions
    *  Your memory usage beats 5.55 % of javascript submissions (38.5 MB)
    */
-  
   
   for (let j = 0, i = 0; i < nums.length; i++) {
     if (nums[i] !== 0) {
@@ -63,6 +66,11 @@ var moveZeroes = function(nums) {
    *  创建两个指针 i 和 j，第一次遍历用 j 记录当前有多少非 0 元素。
    *   即遍历的时候每遇到一个非 0 元素就将其往数组左边挪（以j 为下标位置），同时把 j++，
    *   第一次遍历完后，j 指针的下标就指向了最后一个非 0 元素下标的后一位。
+   * 
+   * 上一次思路：
+   *  1.第一次遍历时，用 j 指针记录非 0 的个数，同时把非 0 元素赋值给 nums[j]
+   *  2.第二次遍历时，已知 “非 0 元素统计了 j 个，那么为 0 元素的个数为 nums.length - j”，
+   *   把 j 到 nums.length - 1 的 nums 下标赋值为 0 即可
    * 
    * 复杂度分析：
    *  时间复杂度: O(n)
@@ -94,6 +102,9 @@ var moveZeroes = function(nums) {
   /**
    * 1. 暴力解法
    * 
+   * 上一次思路：
+   *  1. 遍历整个数组，判断 元素 是否为 0
+  *   2. 遇到 0 删除，再在列表最后追加 0 
    * 
    * 复杂度分析：
    *  时间复杂度: O(n^2)
