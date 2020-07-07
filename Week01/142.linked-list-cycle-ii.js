@@ -18,6 +18,7 @@
  * @return {ListNode}
  */
 var detectCycle = function(head) {
+  // https://leetcode-cn.com/problems/linked-list-cycle-ii/solution/huan-xing-lian-biao-ii-by-leetcode/
   
   /**
    * 1. 哈希表
@@ -54,7 +55,6 @@ var detectCycle = function(head) {
   let slow = fast = head
 
   while(fast && fast.next) {
-    
     fast = fast.next.next
     slow = slow.next
 
@@ -71,7 +71,6 @@ var detectCycle = function(head) {
   }
 
   return fast
-
 
   /**
    * 1. 哈希表
