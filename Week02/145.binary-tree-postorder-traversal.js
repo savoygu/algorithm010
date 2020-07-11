@@ -67,8 +67,8 @@ var postorderTraversal = function(root) {
     } else {
       stack.pop()
 
-      const left = stack.pop()
-      res.push(left.val)
+      const node = stack.pop()
+      res.push(node.val)
     }
   }
   
