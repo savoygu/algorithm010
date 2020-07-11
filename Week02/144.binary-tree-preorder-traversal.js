@@ -43,7 +43,31 @@ var preorderTraversal = function(root) {
    *   因为，每棵子树都先访问其根节点。对节点的左右子树来说，也一定是先访问根。
    *   在 A 的两棵子树中，遍历完左子树后，再遍历右子树。
    *   因此，在访问完根节点后，遍历左子树前，要将右子树压入栈。
+   * 
+   * 复杂度分析
+   *  时间复杂度：O(n)。
+   *  空间复杂度：O(n)。
    */
+  
+  // 单条件、while，无脑出栈无脑入
+  /*
+  if (!root) return []
+
+  const res = []
+  const stack = [root]
+
+  while(stack.length) {
+    const node = stack.pop()
+    res.push(node.val)
+
+    if (node.right) { stack.push(node.right) }
+    if (node.left) { stack.push(node.left) }
+  }
+
+  return res
+  */
+
+  /*
   const res = []
   const stack = []
   let curr = root
@@ -57,6 +81,7 @@ var preorderTraversal = function(root) {
     curr = stack.pop()
   }
   return res
+  */
 
   /**
    * 1. 递归
@@ -69,6 +94,10 @@ var preorderTraversal = function(root) {
 
   /**
    * 辅助函数
+   * 
+   * 复杂度分析
+   *  时间复杂度：O(n)。递归函数 T(n) = 2⋅T(n/2)+1。
+   *  空间复杂度：最坏情况下需要空间O(n)，平均情况为O(logn)
    */
 
   // const res = []
