@@ -21,6 +21,7 @@ var inorderTraversal = function(root) {
    *  - 如果遇到的节点为灰色，则将节点的值输出。
    */
 
+  /*
   const WHITE = 0, GRAY = 1;
   const res = []
   const stack = [[WHITE, root]]
@@ -39,6 +40,7 @@ var inorderTraversal = function(root) {
     }
   }
   return res
+  */
 
   /**
    * 2. 基于栈的遍历 
@@ -51,6 +53,25 @@ var inorderTraversal = function(root) {
    *   - 时间复杂度：O(n)。
    *   - 空间复杂度：O(n)。
    */
+
+  // 双条件，while 循环，移动指针先开路，非空入栈先往左，空了出栈再往右
+  const res = []
+  if (!root) return res
+
+  const stack = []
+  let p = root
+  while(p || stack.length) {
+    if (p) {
+      stack.push(p)
+      p = p.left
+    } else {
+      const node = stack.pop()
+      res.push(node.val)
+      p = node.right
+    }
+  }
+  return res
+
 
   /*
   const res = []
