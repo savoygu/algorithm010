@@ -1,15 +1,21 @@
-function insertionSort(array) {
-  const len = array.length;
+function insertionSort (arr) {
+  const n = arr.length
 
-  for (let i = 1; i < len; i++) {
-    let preIndex = i - 1;
-    const current = array[i];
+  for (let step = 1; step < n; step++) {
+    const key = arr[step]
+    let j = step - 1
 
-    while (preIndex >= 0 && array[preIndex] > current) {
-      array[preIndex + 1] = array[preIndex];
-      preIndex--;
+    while(j >= 0 && key < arr[j]) { // j 下标的元素就是比 key 小的元素
+      arr[j + 1] = arr[j]
+      j--
     }
-    array[preIndex + 1] = current;
+    
+    arr[j + 1] = key // 所以 key 在 j + 1 位置
   }
-  return array;
+
+  return arr
 }
+
+const arr = [-2, 45, 0, 11, -9]
+insertionSort(arr)
+console.log(arr)
