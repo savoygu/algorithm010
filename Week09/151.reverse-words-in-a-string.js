@@ -50,11 +50,11 @@ var reverseWords = function(s) {
   }
 
   const l = trim(s)
-  reverse(l, 0, l.length - 1)
+  reverse(l, 0, l.length - 1) // 两次反转 负负得正
   reverseEachWord(l)
 
   return l.join('')
-  
+
 
   // 1. API
   // return s.split(' ').filter(v => v !== '').reverse().join(' ')
