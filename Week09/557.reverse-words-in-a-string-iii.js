@@ -10,16 +10,47 @@
  * @return {string}
  */
 var reverseWords = function(s) {
-  // const split = (s) => {
-  //   let [l, r] = [0, s.length - 1]
+  const split = (s) => {
+    const words = []
+    let word = ''
+    for (let i = 0; i < s.length; i++) {
+      if (s[i] === ' ') {
+        words.push(word)
+        word = ''
+      } else {
+        word += s[i]
+      }
+    }
+    words.push(word)
+    return words
+  }
 
-  //   const output = []
-  //   while(l <= r) {
-  //     output.push(s[l++])
-  //   }
+  const reverse = (s) => {
+    let res = ''
+    for (const c of s) {
+      res = c + res
+    }
+    return res
+  }
+
+  const words = split(s)
+  let res = ''
+  for (const word of words) {
+    res += reverse(word) + ' '
+  }
+  return res.slice(0, -1)
+  
+  /*
+  const split = (s) => {
+    let [l, r] = [0, s.length - 1]
+
+    const output = []
+    while(l <= r) {
+      output.push(s[l++])
+    }
     
-  //   return output
-  // }
+    return output
+  }
   
   const reverse = (l, L, R) => {
     while(L < R) {
@@ -44,6 +75,7 @@ var reverseWords = function(s) {
   reverseEachWord(l)
 
   return l.join('')
+  */
   
   // 1. 利用 API
   // return s.split(' ').map(v => v.split('').reverse().join('')).join(' ')
