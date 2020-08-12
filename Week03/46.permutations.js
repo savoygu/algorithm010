@@ -18,6 +18,38 @@ var permute = function(nums) {
    *   每个子节点又有3个选择，从上往下做出决策，选择就像走过一个点，组成了一条路径
    *   遍历到树的底部就结束遍历，没有可选的数字，此时path的长度和nums一样，它就是全排列之一
    */
+
+  // /*
+  const len = nums.length
+  const res = []
+  if (!len) return res
+
+  const path = []
+  const used = new Array(len).fill(false)
+
+  dfs(nums, len, 0, path, used, res)
+  
+  return res
+
+  function dfs (nums, len, depth, path, used, res) {
+    if (depth === len) {
+      res.push(path.slice())
+      return
+    }
+
+    for (let i = 0; i < len; i++) {
+      if (used[i]) continue
+
+      path.push(nums[i])
+      used[i] = true
+      dfs(nums, len, depth + 1, path, used, res)
+      used[i] = false
+      path.pop()
+    }
+  }
+  // */
+  
+  /*
   const ans = []
   dfs([])
   return ans
@@ -37,6 +69,9 @@ var permute = function(nums) {
       path.pop()
     }
   }
+  */
+
+  // bfs
 };
 // @lc code=end
 
