@@ -37,7 +37,7 @@ var combinationSum2 = function(candidates, target) {
       
       path.push(candidates[i])
       used[i] = true
-      dfs(candidates, len, target, sum + candidates[i], i, path, used, res)
+      dfs(candidates, len, target, sum + candidates[i], i + 1, path, used, res)
       used[i] = false
       path.pop()
     }
