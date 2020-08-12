@@ -20,53 +20,62 @@ var combine = function(n, k) {
    * 
    * 复杂度分析：
    */
-  const ans = []
-  const subans = []
-  function combineSub(start, subans) {
+
+  const res = []
+  if (n <= 0 || k <= 0 || n < k) return res
+
+  dfs(1, [])
+  return res
+
+  function dfs (begin, path) {
+    const len = path.length
     // terminator
-    const len = subans.length
     if (len === k) {
-      ans.push(subans.slice(0))
+      res.push(path.slice())
       return
     }
-    for (let i = start; i <= n - (k - len) + 1; i++) {
+
+    /**
+     * i 的极限值满足：n - i + 1 = (k - len)
+     * 关键：n - i + 1 是闭区间 [i, n] 的长度
+     * k - len 是剩余还要寻找的数的个数
+     */
+    for (let i = begin; i <= n - (k - len) + 1; i++) {
       // process current level logic 
-      subans.push(i)
+      path.push(i)
       // drill down
-      combineSub(i + 1, subans)
+      dfs(i + 1, path)
       // reverse states
-      subans.pop()
+      path.pop()
     }
   }
-  combineSub(1, subans)
-  return ans;
 
   /**
    * 迭代回溯
    */
   /*
-  const ans = []
-  const subans = []
+  const res = []
+  const path = []
   for (let i = 0; i < k; i++) {
-    subans[i] = 0
+    path[i] = 0
   }
 
-  if (n < k) return ans
+  if (n < k) return res
 
   let i = 0
   while(i >= 0) {
-    subans[i]++
+    path[i]++
 
-    if (subans[i] > n) {
+    if (path[i] > n) {
       i--
     } else if (i === k - 1) {
-      ans.push(subans.slice(0))
+      res.push(path.slice(0))
     } else {
       ++i
-      subans[i] = subans[i - 1]
+      path[i] = path[i - 1]
     }
   }
-  return ans
+  return res
   */
 };
 // @lc code=end
