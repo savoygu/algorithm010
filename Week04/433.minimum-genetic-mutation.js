@@ -23,8 +23,42 @@ var minMutation = function(start, end, bank) {
   /**
    * 1. DFS
    */
+  const bankSet = new Set(bank)
+  if (!bankSet.has(end)) return -1
   
+  const visited = new Set([start])
+  let minSteps = Number.MAX_SAFE_INTEGER
+  let steps = 0
 
+  DFS(start, steps)
+
+  return minSteps === Number.MAX_SAFE_INTEGER ? -1 : minSteps
+
+  function DFS (start, steps) {
+    if (start === end) {
+      minSteps = Math.min(minSteps, steps)
+      return
+    }
+
+    for (let i = 0, len = bank.length; i < len; i++) {
+      const mutation = bank[i]
+      let diff = 0
+      
+      for (let j = 0; j < mutation.length; j++) {
+        if (start[j] !== mutation[j]) {
+          diff++
+          if (diff > 1) break
+        }
+      }
+
+      if (diff === 1 && !visited(mutation)) {
+        visited.add(mutation)
+        DFS(mutation, steps + 1)
+        visited.delete(mutation)
+      }
+    }
+  }
+  
   /**
    * 2. BFS
    */
