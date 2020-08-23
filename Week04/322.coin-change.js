@@ -12,7 +12,92 @@
  */
 var coinChange = function(coins, amount) {
   /**
-   * 记忆化搜搜 - 动态规划
+   * 4. 贪心算法
+   */
+  if (amount === 0) return 0
+  
+  coins.sort((a, b) => b - a)
+
+  let res = Number.MAX_VALUE
+  _coinChange(amount, 0, 0)
+  return res === Number.MAX_VALUE ? -1 : res
+
+  function _coinChange (remain, idx, count) {
+    if (remain === 0) {
+      res = Math.min(res, count)
+      return
+    }
+
+    if (idx === coins.length) return
+    for (let i = Math.floor(remain / coins[idx]); i >= 0 && i + count < res; i--) {
+      _coinChange(remain - i * coins[idx], idx + 1, count + i)
+    }
+  }
+
+
+  /**
+   * 3. 动态规划 - 自下而上
+   *  定义：
+   *   F(i)：组成金额 i 所需最少的硬币数量
+   * 
+   *  假设在计算 F(i) 之前，我们已经计算出了 F(0) 到 F(i - 1) 的答案。则 F(i) 对应的转移方程为
+   *   F(i) = min(F(i - cj)) + 1，其中 j=0...n-1
+   *  其中 cj 代表的是第 j 枚硬币的面值，即我们枚举最后一枚硬币面额是 cj，那么需要从 i−cj 这个金额的状态 F(i−cj) 转移过来，再算上枚举的这枚硬币数量 1 的贡献，由于要硬币数量最少，所以 F(i) 为前面能转移过来的状态的最小值加上枚举的硬币数量 1。
+   * 
+   */
+  /*
+  const dp = new Array(amount + 1).fill(Infinity)
+  dp[0] = 0
+
+  for (let coin of coins)  {
+    for (let x = coin; x < amount + 1; x++) {
+      dp[x] = Math.min(dp[x], dp[x - coin] + 1)
+    }
+  }
+  return dp[amount] !== Infinity ? dp[amount] : -1
+  */
+
+  // dp[n]：表示凑成总金额为 n 所需要的最少的硬币个数
+  /*
+  if (!coins.length) return -1
+  
+  const dp = new Array(amount + 1).fill(0)
+  
+  for (let i = 1; i <= amount; i++) {
+    let min = Number.MAX_VALUE
+    for (const coin of coins) {
+      if (i - coin >= 0 && dp[i - coin] < min) {
+        min = dp[i - coin] + 1
+      }
+    }
+    dp[i] = min
+  }
+
+  return dp[amount] === Number.MAX_VALUE ? -1 : dp[amount]
+  */
+  
+  /*
+  if (!coins.length) return -1
+
+  const dp = new Array(amount + 1).fill(Number.MAX_VALUE)
+  dp[0] = 0
+
+  for (let i = 1; i <= amount; i++) {
+    for (let coin of coins) {
+      if (i - coin >= 0) {
+        // dp[i] 两种实现方式
+        // 包含当前的 coin, 那么剩余钱就是 i - coin，这种操作要兑换的硬币数是 dp[i - coin] + 1
+        // 不包含 coin，要兑换的硬币数是 dp[i]
+        dp[i] = Math.min(dp[i - coin], dp[i])
+      }
+    }
+  }
+  return dp[amount] === Number.MAX_VALUE ? -1 : dp[amount]
+  */
+
+  
+  /**
+   * 2. 记忆化搜搜 - 动态规划
    *  定义：
    *   F(S): 组成金额 S 所需要的最少硬币数量
    *   [C0...Cn-1]: 可选的 n 枚硬币面额值
@@ -57,67 +142,9 @@ var coinChange = function(coins, amount) {
     return count[remain - 1]
   }
   */
-
-  // 动态规划 - 自下而上
-  /**
-   * 定义：
-   *  F(i)：组成金额 i 所需最少的硬币数量
-   * 
-   * 假设在计算 F(i) 之前，我们已经计算出了 F(0) 到 F(i - 1) 的答案。则 F(i) 对应的转移方程为
-   *  F(i) = min(F(i - cj)) + 1，其中 j=0...n-1
-   * 其中 cj 代表的是第 j 枚硬币的面值，即我们枚举最后一枚硬币面额是 cj，那么需要从 i−cj 这个金额的状态 F(i−cj) 转移过来，再算上枚举的这枚硬币数量 1 的贡献，由于要硬币数量最少，所以 F(i) 为前面能转移过来的状态的最小值加上枚举的硬币数量 1。
-   * 
-   */
-  /*
-  const dp = new Array(amount + 1).fill(Infinity)
-  dp[0] = 0
-
-  for (let coin of coins)  {
-    for (let x = coin; x < amount + 1; x++) {
-      dp[x] = Math.min(dp[x], dp[x - coin] + 1)
-    }
-  }
-  return dp[amount] !== Infinity ? dp[amount] : -1
-  */
-
-  // dp[n]：表示凑成总金额为 n 所需要的最少的硬币个数
-  if (!coins.length) return -1
   
-  const dp = new Array(amount + 1).fill(0)
   
-  for (let i = 1; i <= amount; i++) {
-    let min = Number.MAX_VALUE
-    for (const coin of coins) {
-      if (i - coin >= 0 && dp[i - coin] < min) {
-        min = dp[i - coin] + 1
-      }
-    }
-    dp[i] = min
-  }
-
-  return dp[amount] === Number.MAX_VALUE ? -1 : dp[amount]
-  
-  /*
-  if (!coins.length) return -1
-  
-  const dp = new Array(amount + 1).fill(Number.MAX_VALUE)
-  dp[0] = 0
-
-  for (let i = 1; i <= amount; i++) {
-    for (let coin of coins) {
-      if (i - coin >= 0) {
-        // dp[i] 两种实现方式
-        // 包含当前的 coin, 那么剩余钱就是 i - coin，这种操作要兑换的硬币数是 dp[i - coin] + 1
-        // 不包含 coin，要兑换的硬币数是 dp[i]
-        dp[i] = Math.min(dp[i - coin], dp[i])
-      }
-    }
-  }
-  return dp[amount] === Number.MAX_VALUE ? -1 : dp[amount]
-  */
-
-  
-  // 搜索回溯（超时）
+  // 1. 搜索回溯（超时）
   /*
   // 回溯三要素：退出条件，回溯过程，递归参数
   const _coinChange = (idx, coins, amount) => {
