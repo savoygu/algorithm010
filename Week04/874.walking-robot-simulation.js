@@ -14,14 +14,15 @@ var robotSim = function(commands, obstacles) {
   // direction 0 1 2 3 代表 北，东，南，西
   let res = 0, dir = 0, x = y = 0
   const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]
-  const set = new Set(obstacles.map(([x, y]) => x + ',' + y))
+  const coords = (x, y) => x + ',' + y
+  const set = new Set(obstacles.map(([x, y]) => coords(x, y)))
 
   for (let cmd of commands) {
     if (cmd >= 0) {
       for (let i = 0; i < cmd; i++) {
         const [dx, dy] = directions[dir]
         const [nx, ny] = [x + dx, y + dy]
-        if (set.has(nx + ',' + ny)) break
+        if (set.has(coords(nx, ny))) break
         [x, y] = [nx, ny]
         res = Math.max(res, x * x + y * y)
       }
