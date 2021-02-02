@@ -78,7 +78,7 @@ var twoSum = function(nums, target) {
    *  Your memory usage beats 36.44 % of javascript submissions (35.2 MB)
    */
 
-   /*
+  /*
   for (let i = 0, len = nums.length; i < len - 1; i++) {
     for (let j = i + 1; j < len; j++) {
       if (nums[i] + nums[j] === target) {
