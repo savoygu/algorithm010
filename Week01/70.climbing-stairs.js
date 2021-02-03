@@ -33,8 +33,8 @@ var climbStairs = function(n) {
    *  Your runtime beats 78.69 % of javascript submissions
    *  Your memory usage beats 100 % of javascript submissions (32.4 MB)
    */
-  const sqrt5 = Math.sqrt(5)
-  return (Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1)) / sqrt5
+  // const sqrt5 = Math.sqrt(5)
+  // return (Math.pow((1 + sqrt5) / 2, n + 1) - Math.pow((1 - sqrt5) / 2, n + 1)) / sqrt5
 
   /**
    * 3. 通项公式矩阵形式（斐波那契额数列）
@@ -98,6 +98,16 @@ var climbStairs = function(n) {
   // if (n === 2) { return 2 }
 
   // return climbStairs(n - 1) + climbStairs(n - 2)
+
+  // https://leetcode-cn.com/problems/climbing-stairs/solution/javaqing-wa-tiao-tai-jie-he-fei-bo-na-qi-shu-lie-2/
+  // 尾递归
+
+  return fabonacci(n, 1, 1)
+  
+  function fabonacci(n, a, b) {
+    if (n <= 1) return b
+    return fabonacci(n - 1, b, a + b)
+  }
   
   /**
    * 记忆化递归：避免重复计算，优化时间复杂度
