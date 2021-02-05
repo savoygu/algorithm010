@@ -91,3 +91,59 @@ var detectCycle = function(head) {
 };
 // @lc code=end
 
+
+/**
+ * 方法1：哈希表
+ * 复杂度分析：
+ *   时间复杂度：O(n)，对于含有 n 个元素的链表，我们访问每个元素最多一次。
+ *     添加一个结点到哈希表中只需要花费 O(1) 的时间。
+ *   空间复杂度：O(n)，空间取决于添加到哈希表中的元素数目，最多可以添加 n 个元素。
+ */
+// var hasCycle = function(head) {
+//   const seen = new Set()
+//   while(head) {
+//   	if (seen.has(head)) return head
+//     seen.add(head)
+//     head = head.next
+//   }
+//   return null
+// }
+
+/**
+ * 方法2：快慢指针
+ * 推导过程：
+ *   相遇时：
+ *     slow走过的路程：x + y + n(y+z), n代表slow绕了n圈
+ *     fast走过的路程：x + y + m(y+z)，m代表fast饶了m圈
+ *     m > n
+ *   因为fast速度是slow两倍：
+ *     2(x + y + n(y + z)) = x + y + m(y + z)
+ *     x + y = (m - 2n)(y + z)
+ *     x = (m - 2n)(y + z) - y
+ *     y + z就是1圈，假设 o = m-2n，o是一个正整数，那么 x = o(y + z) -y
+ *     如果o = 1，那么 x = z，和答主假设的情况一样
+ *     如果o > 1，那么 x = (o-1)(y+z) + y + z - y, x = (o-1)(y+z) + z，
+ *       即x的长度为o-1圈加上z 
+ *   所以，从第一阶段获得的相遇点，走过x距离机会到达环的起点。
+ * 复杂度分析：
+ *   时间复杂度：O(n)，第二次相遇中，慢指针须走步数 x < x + y；第一次相遇中，
+ *     慢指针须走步数 x + y - x' < x + y，其中 x' 为双指针重合点与环入口距离；
+ *     因此总体为线性复杂度；
+ *   空间复杂度：O(1)，双指针使用常数大小的额外空间。
+ */
+// var hasCycle = function(head) {
+//   let slow = fast = head
+//   while(fast && fast.next) {
+//     slow = slow.next
+//     fast = fast.next.next
+//     if (slow === fast) {
+//       slow = head
+//       while(slow !== fast) {
+//         slow = slow.next
+//         fast = fast.next
+//       }
+//       return slow
+//     }
+//   }
+//   return null
+// }
