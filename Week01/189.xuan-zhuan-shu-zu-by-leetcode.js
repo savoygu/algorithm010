@@ -39,7 +39,7 @@ var rotate = function(nums, k) {
    * 
    */
 
-   /*
+  /*
   const n = nums.length
   k = k % nums.length
   reverse(nums, 0, n - 1)
@@ -86,20 +86,20 @@ var rotate = function(nums, k) {
    * 
    */
   
-   const n = nums.length
-   k %= n
-   let count = 0
+  const n = nums.length
+  k %= n
+  let count = 0
 
-   for (let i = 0; count < n; i++) {
-     let cur = i
-     let pre = nums[i]
-     do {
-      const next = (cur + k) % n;
-      [nums[next], pre] = [pre, nums[next]]
-      cur = next
-      count++
-     } while(i !== cur)
-   }
+  for (let i = 0; count < n; i++) {
+    let cur = i
+    let pre = nums[i]
+    do {
+    const next = (cur + k) % n;
+    [nums[next], pre] = [pre, nums[next]]
+    cur = next
+    count++
+    } while(i !== cur)
+  }
 
   /**
    * 2. 使用额外的数组
@@ -121,7 +121,7 @@ var rotate = function(nums, k) {
   
   /*
   const len = nums.length
-   
+
   const a = new Array(len)
 
   for (let i = 0; i < len; i++) {
