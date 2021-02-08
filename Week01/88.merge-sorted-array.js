@@ -35,6 +35,15 @@ var merge = function(nums1, m, nums2, n) {
    *  Your memory usage beats 100 % of javascript submissions (32.1 MB)
    */
 
+  /**
+   * 方法1：双指针 / 从后往前
+   * 实现思路：因为 nums1 的空间都集中在后面，所以从后向前处理排序的数据会更好
+   *   节省空间，一边遍历一边将值填充进去。
+   * 复杂度分析：
+   *   时间复杂度：O(m + n)
+   *   空间复杂度：O(1)
+   * 
+   */
   let end1 = m - 1
   let end2 = n - 1
   let end = m + n - 1
